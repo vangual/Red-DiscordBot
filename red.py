@@ -19,6 +19,7 @@ import youtube_dl
 import os
 import asyncio
 import glob
+import platform
 from os import path
 from random import choice, randint, shuffle
 
@@ -193,7 +194,10 @@ trivia_help = """
 client = discord.Client()
 
 if not discord.opus.is_loaded():
-	discord.opus.load_opus('libopus-0.dll')
+	if platform.architecture()[0] == '64bit':
+		discord.opus.load_opus('libopus-0-64.dll')
+	else:
+		discord.opus.load_opus('libopus-0.dll')
 
 @client.async_event
 async def on_message(message):
